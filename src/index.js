@@ -1,8 +1,12 @@
-import store from "./store";
-import { addTask,completeTask } from "./action";
+import store from "./store/configureStore";
+import { addTask,completeTask, removeTask, fetchTodos } from "./store/task";
 
-store.dispatch(addTask("Task_1"))
-store.dispatch(addTask("Task_2"))
-console.log(store.getState())
-store.dispatch(completeTask(1))
-console.log(store.getState())
+const unsubscribe = store.subscribe(() => {
+    console.log("updated",store.getState())
+})
+
+store.dispatch(addTask({task:"Task_1"}))
+store.dispatch(addTask({task:"Task_2"}))
+store.dispatch(removeTask({id:1}))
+store.dispatch(completeTask({id:2}))
+store.dispatch(fetchTodos())
